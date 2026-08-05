@@ -1,0 +1,7 @@
+*.log
+*.tmp
+*.swp
+
+.idea/
+
+__pycache__/
