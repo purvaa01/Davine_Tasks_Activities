@@ -12,9 +12,9 @@ pipeline {
 		stage('Build') {
 			steps {
 				sh '''
+                    cd Week5/task
                     python3 -m venv myenv
-                    myenv/bin/activate  
-                    pip install -r requirements.txt
+                    myenv/bin/pip install -r requirements.txt
                 '''
 			}
 		}
@@ -22,8 +22,8 @@ pipeline {
 		stage('Test') {
 			steps {
 				sh '''
-                    pip install pytest 
-                    pytest
+                    cd Week5/task
+                    myenv/bin/pytest
                 '''
 			}
 		}
