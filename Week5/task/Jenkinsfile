@@ -15,7 +15,7 @@ pipeline {
 			'''
 		}
 		stage('Test') {
-			shh '''
+			sh '''
 			pip install pytest
 			pytest
 			'''
