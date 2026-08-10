@@ -2,25 +2,28 @@ pipeline {
 	agent any
 
 	stages {
+
 		stage('Checkout') {
 			steps {
 				checkout scm
 			}
 		}
+
 		stage('Build') {
-			sh '''
-			python3 -m venv myenv
-			source myenv/bin/activate
-			pip install -r requirements.txt
-			'''
+			steps {
+				sh '''
+                    python3 -m venv myenv
+                    myenv/bin/pip install -r requirements.txt
+                '''
+			}
 		}
+
 		stage('Test') {
-			sh '''
-			pip install pytest
-			pytest
-			'''
+			steps {
+				sh '''
+                    myenv/bin/pytest
+                '''
+			}
 		}
 	}
-
-
 }
