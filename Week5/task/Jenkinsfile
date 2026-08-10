@@ -13,7 +13,8 @@ pipeline {
 			steps {
 				sh '''
                     python3 -m venv myenv
-                    myenv/bin/pip install -r requirements.txt
+                    myenv/bin/activate  
+                    pip install -r requirements.txt
                 '''
 			}
 		}
@@ -21,7 +22,8 @@ pipeline {
 		stage('Test') {
 			steps {
 				sh '''
-                    myenv/bin/pytest
+                    pip install pytest 
+                    pytest
                 '''
 			}
 		}
