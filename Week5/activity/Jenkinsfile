@@ -12,6 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh '''
+                    cd Week5/activity
                     python3 -m venv myenv
                     myenv/bin/pip install -r requirements.txt
                 '''
@@ -21,6 +22,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh '''
+                    cd Week5/activity
                     myenv/bin/pytest
                 '''
             }
@@ -29,6 +31,7 @@ pipeline {
         stage('Validation') {
             steps {
                 sh '''
+                    cd Week5/activity
                     python3 -m py_compile app.py test_app.py
                 '''
             }
