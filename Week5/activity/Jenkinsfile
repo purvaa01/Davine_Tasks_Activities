@@ -1,33 +1,37 @@
 pipeline {
-    agent any {
-        stages {
-            stage('checkout') {
-                steps {
-                    checkout scm
-                }
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
-            stage('Build') {
-                steps {
-                    sh '''
-                        python3 -m venv myenv
-                        myenv/bin/pip install -r requirements.txt
-                    '''
-                }
+        }
+
+        stage('Build') {
+            steps {
+                sh '''
+                    python3 -m venv myenv
+                    myenv/bin/pip install -r requirements.txt
+                '''
             }
-            stage('Test') {
-                steps {
-                    sh '''
-                        myenv/bin/pytest
-                    '''
-                }
+        }
+
+        stage('Test') {
+            steps {
+                sh '''
+                    myenv/bin/pytest
+                '''
             }
-            stage('Validation') {
-                steps {
-                    sh '''
-                        python3 -m py_compile app.py test_app.py
-                    '''
-                }
+        }
+
+        stage('Validation') {
+            steps {
+                sh '''
+                    python3 -m py_compile app.py test_app.py
+                '''
             }
-         }
+        }
     }
 }
