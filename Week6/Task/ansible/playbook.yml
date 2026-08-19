@@ -1,0 +1,25 @@
+---
+- name: Configure ubuntu system
+  hosts: local
+  become: yes
+
+  tasks:
+
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+        update_cache: true
+
+    - name: create user
+      user:
+        name: dev
+        state: present
+        shell: /bin/bash
+
+    - name: start apache service
+      service:
+        name: apache2
+        state: started
+        enabled: true
+
