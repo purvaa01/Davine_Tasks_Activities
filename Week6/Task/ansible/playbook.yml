@@ -22,4 +22,8 @@
         name: apache2
         state: started
         enabled: true
+    - name: create a custom index.html
+      copy:
+        dest: /var/www/html/index.html
+        content: "<h3>This is the week6 task</h3><br><p>Ansible testing</p>"
 
