@@ -1,0 +1,5 @@
+aws_region = "ap-south-1"
+vpc_id     = "vpc-012b56f7b54d2c077"
+subnet_id  = "subnet-0a001cddfb4d16a8d"
+key_name   = "vpc-peering-key"
+ami_id     = "ami-07e5ce642bbc48c0d"

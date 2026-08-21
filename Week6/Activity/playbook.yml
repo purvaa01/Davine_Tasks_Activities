@@ -1,0 +1,40 @@
+---
+- name: config provisioned web server
+  hosts: webserver
+  become: true
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - apache2
+          - curl
+        state: present
+        update_cache: true
+    - name: create app user
+      user:
+        name: webapp
+        state: present
+        shell: /bin/bash
+    - name: start and enable apache
+      service:
+        name: apache2
+        state: started
+        enabled: true
+    - name: deploy app webpage
+      copy:
+        content: |
+           <!DOCTYPE html>
+           <html>
+           <head>
+               <title>DevOps Internship Application</title>
+           </head>
+           <body>
+               <h1>Application After Update</h1>
+               <p>Provisioned using Terraform and configured using Ansible.</p>
+           </body>
+           </html>
+        dest: /var/www/html/index.html
+        owner: webapp
+        group: webapp
+        mode: '0644'

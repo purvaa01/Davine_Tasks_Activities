@@ -5,3 +5,7 @@
 .idea/
 
 __pycache__/
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
