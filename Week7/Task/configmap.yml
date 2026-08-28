@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: devops
+data:
+  APP_NAME: "Devops Internship"
+  APP_ENV: "development"
