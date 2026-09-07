@@ -16,31 +16,39 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Creating virtual environment and installing dependencies...'
-                sh 'python3 -m venv venv'
-                sh 'venv/bin/pip install -r requirements.txt'
+                dir('Week9/Task') {
+                    echo 'Creating virtual environment and installing dependencies...'
+                    sh 'python3 -m venv venv'
+                    sh 'venv/bin/pip install -r requirements.txt'
+                }
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running automated tests...'
-                sh 'venv/bin/pytest app/test_app.py -v'
+                dir('Week9/Task') {
+                    echo 'Running automated tests...'
+                    sh 'venv/bin/pytest app/test_app.py -v'
+                }
             }
         }
 
         stage('Package') {
             steps {
-                echo 'Packaging application...'
-                sh 'tar -czf app-package.tar.gz app requirements.txt'
+                dir('Week9/Task') {
+                    echo 'Packaging application...'
+                    sh 'tar -czf app-package.tar.gz app requirements.txt'
+                }
             }
         }
 
         stage('Docker Build') {
             steps {
-                echo "Building Docker image: ${IMAGE_NAME}:${IMAGE_TAG}"
-                sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
-                sh 'docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest'
+                dir('Week9/Task') {
+                    echo "Building Docker image: ${IMAGE_NAME}:${IMAGE_TAG}"
+                    sh 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                    sh 'docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest'
+                }
             }
         }
 
