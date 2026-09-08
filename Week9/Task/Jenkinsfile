@@ -2,9 +2,9 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'jenkins-cicd-app'
-        IMAGE_TAG = "build-${BUILD_NUMBER}"
-    }
+    IMAGE_NAME = 'YOUR_DOCKERHUB_USERNAME/jenkins-cicd-app'
+    IMAGE_TAG = "build-${BUILD_NUMBER}"
+}
 
     stages {
 
@@ -51,12 +51,23 @@ pipeline {
                 }
             }
         }
-
-        stage('Docker Push') {
-            steps {
-                echo 'Docker image will be pushed to the configured registry.'
-            }
+	stage('Docker Push') {
+    steps {
+        withCredentials([usernamePassword(
+            credentialsId: 'dockerhub-creds',
+            usernameVariable: 'DOCKER_USERNAME',
+            passwordVariable: 'DOCKER_PASSWORD'
+        )]) {
+            sh '''
+                echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                docker push ${IMAGE_NAME}:${IMAGE_TAG}
+                docker push ${IMAGE_NAME}:latest
+                docker logout
+            '''
         }
+    }
+}
+        
     }
 
     post {
