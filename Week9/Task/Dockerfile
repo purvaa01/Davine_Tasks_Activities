@@ -6,7 +6,11 @@ COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app/ .
+RUN useradd -m appuser
+
+COPY --chown=appuser:appuser app/ .
+
+USER appuser
 
 EXPOSE 5000
 

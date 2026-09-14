@@ -23,6 +23,21 @@ pipeline {
                 }
             }
         }
+        stage('Security Scan') {
+            steps {
+                dir('Week9/Task') {
+                    echo 'Running Trivy security scan...'
+                    sh '''
+                        trivy image \
+                        --scanners vuln \
+                        --severity HIGH,CRITICAL \
+                        --no-progress \
+                        --exit-code 0 \
+                        ${IMAGE_NAME}:${IMAGE_TAG}
+                    '''
+                }
+            }
+        }
 
         stage('Test') {
             steps {
